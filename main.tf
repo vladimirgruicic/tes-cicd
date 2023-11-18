@@ -63,7 +63,7 @@ resource "aws_cloudfront_distribution" "test_vg_frontend_distribution" {
 
   logging_config {
     include_cookies = false
-    bucket          = "mylogs.s3.amazonaws.com"
+    bucket          = "test-vg-frontend-bucket"
     prefix          = "myprefix"
   }
 

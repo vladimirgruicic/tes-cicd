@@ -1,3 +1,9 @@
+# main.tf
+
+provider "aws" {
+  region = "eu-north-1"
+}
+
 # S3 Bucket for Frontend
 resource "aws_s3_bucket" "test_vg_frontend_bucket" {
   bucket = "test-vg-frontend-bucket"

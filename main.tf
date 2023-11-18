@@ -1,6 +1,6 @@
 # S3 Bucket for Frontend
-resource "aws_s3_bucket" "test-vg-frontend_bucket" {
-  bucket = "test-vg-frontend_bucket"
+resource "aws_s3_bucket" "test_vg_frontend_bucket" {
+  bucket = "test-vg-frontend-bucket"
   acl    = "private"  # Adjust based on your access requirements
 
   versioning {
@@ -20,10 +20,10 @@ resource "aws_s3_bucket" "test-vg-frontend_bucket" {
     }
   }
 
-  logging {
-    target_bucket = "your-log-bucket"
-    target_prefix = "s3-logs/"
-  }
+  # logging {
+  #   target_bucket = "your-log-bucket"
+  #   target_prefix = "s3-logs/"
+  # }
 
   lifecycle_rule {
     enabled = true
@@ -46,8 +46,8 @@ resource "aws_s3_bucket" "test-vg-frontend_bucket" {
 resource "aws_cloudfront_distribution" "test_vg_frontend_distribution" {
   origin {
     domain_name              = aws_s3_bucket.test_vg_frontend_bucket.bucket_regional_domain_name
-    origin_access_control_id = aws_cloudfront_origin_access_control.default.id
-    origin_id                = local.s3_origin_id
+#    origin_access_control_id = aws_cloudfront_origin_access_control.default.id
+    origin_id                = "test-origin"
   }
 
   enabled             = true
@@ -66,7 +66,7 @@ resource "aws_cloudfront_distribution" "test_vg_frontend_distribution" {
   default_cache_behavior {
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods   = ["GET", "HEAD", "OPTIONS"]
-    target_origin_id = local.s3_origin_id
+    target_origin_id = "test-origin"
 
     forwarded_values {
       query_string = false
@@ -87,7 +87,7 @@ resource "aws_cloudfront_distribution" "test_vg_frontend_distribution" {
     path_pattern     = "/content/immutable/*"
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
     cached_methods   = ["GET", "HEAD", "OPTIONS"]
-    target_origin_id = local.s3_origin_id
+    target_origin_id = "test-origin"
 
     forwarded_values {
       query_string = false
@@ -110,7 +110,7 @@ resource "aws_cloudfront_distribution" "test_vg_frontend_distribution" {
     path_pattern     = "/content/*"
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
     cached_methods   = ["GET", "HEAD"]
-    target_origin_id = local.s3_origin_id
+    target_origin_id = "test-origin"
 
     forwarded_values {
       query_string = false

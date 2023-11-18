@@ -6,7 +6,7 @@ provider "aws" {
 
 # S3 Bucket for Frontend
 resource "aws_s3_bucket" "test_vg_frontend_bucket" {
-  bucket = "test-vg-frontend-bucket-new"
+  bucket = "test-vg-frontend-bucket-anew"
   acl    = "private"  # Adjust based on your access requirements
 
   versioning {
@@ -61,11 +61,11 @@ resource "aws_cloudfront_distribution" "test_vg_frontend_distribution" {
   comment             = "Some comment"
   default_root_object = "index.html"
 
-  logging_config {
-    include_cookies = false
-    bucket          = "test-vg-frontend-bucket-new"
-    prefix          = "myprefix"
-  }
+  # logging_config {
+  #   include_cookies = false
+  #   bucket          = "test-vg-frontend-bucket-new"
+  #   prefix          = "myprefix"
+  # }
 
   aliases = ["mysite.example.com", "yoursite.example.com"]
 
